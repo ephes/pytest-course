@@ -13,17 +13,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import sys
 from pathlib import Path
 
-import environ
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-
-# Read environment from .env
-env = environ.Env()
-environ.Env.read_env(BASE_DIR / ".env")
+BASE_DIR = Path(__file__).parent.parent.parent
 
 # make sure our apps directory is on the python path
-print("apps dir: ", BASE_DIR / "apps")
 sys.path.append(str(BASE_DIR / "apps"))
 
 # Quick-start development settings - unsuitable for production
@@ -50,7 +43,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "crispy_forms",
     "crispy_bootstrap5",
-    "apps.client.apps.ClientConfig",
+    "locnus.apps.LocnusConfig",
 ]
 
 MIDDLEWARE = [
@@ -93,8 +86,6 @@ DATABASES = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
-    # Postgres
-    # "default": env.db("DATABASE_URL", default="postgres:///locnus"),
 }
 
 

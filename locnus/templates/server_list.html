@@ -7,12 +7,12 @@
         <div class="col-md-10 offset-md-1 mt-4">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">List of registered ActivityPub clients.</h5>
+              <h5 class="card-title">List of registered ActivityPub servers.</h5>
               <p class="card-text">
-                Click to add a new ActivityPub client!
+                Click to add a new ActivityPub server!
               </p>
-              <a href='{% url "client:get-create-client" %}'>
-                <button type="button" class="btn btn-primary">Add Client</button>
+              <a href='{% url "locnus:get-create-server" %}'>
+                <button type="button" class="btn btn-primary">Add Server</button>
               </a>
             </div>
           </div>
@@ -24,7 +24,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-10 offset-md-1 mt-4">
-          {% if clients %}
+          {% if servers %}
             <table class="table">
               <thead>
                 <tr>
@@ -32,19 +32,19 @@
                   <th scope="col">Base API Url</th>
                   <th scope="col">Name</th>
                   <th scope="col">Public</th>
-                  <th scope="col">Personal</th>
+                  <th scope="col">Private</th>
                 </tr>
               </thead>
               <tbody>
-                {% for client in clients %}
+                {% for server in servers %}
                   <tr>
                     <th scope="row">{{ forloop.counter }}</th>
-                    <td><a href='{% url "client:client-update" %}'>{{ client.api_base_url }}</a></td>
-                    <td>{{ client.name }}</td>
-                    <td><a href='{% url "client:timeline" client_pk=client.pk %}'>
+                    <td><a href="{{ server.api_base_url }}">{{ server.api_base_url }}</a></td>
+                    <td>{{ server.name }}</td>
+                    <td><a href='{% url "locnus:public-timeline" server_pk=server.pk %}'>
                       <button type="button" class="btn btn-light">Timeline</button>
                     </a></td>
-                    <td><a href='{% url "client:login-list" client_pk=client.pk %}'>
+                    <td><a href='{% url "locnus:login-list" server_pk=server.pk %}'>
                       <button type="button" class="btn btn-light">Logins</button>
                     </a></td>
                   </tr>

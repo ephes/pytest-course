@@ -5,7 +5,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-10 offset-md-1 mt-4">
-        <form method="post" action='{% url "client:post-create-client" %}'>
+        <form method="post" action='{% url "locnus:post-create-server" %}'>
           {% csrf_token %}
           {% crispy form %}
         </form>

@@ -7,11 +7,11 @@
         <div class="col-md-10 offset-md-1 mt-4">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">List of Users for this Client.</h5>
+              <h5 class="card-title">List of Users for this server.</h5>
               <p class="card-text">
                 Click to add a new Login!
               </p>
-              <a href='{% url "client:get-create-login" %}'>
+              <a href='{% url "locnus:get-create-login" %}'>
                 <button type="button" class="btn btn-primary">Add Login</button>
               </a>
             </div>
@@ -38,7 +38,7 @@
                   <tr>
                     <th scope="row">{{ forloop.counter }}</th>
                     <td>{{ login.username }}</td>
-                    <td><a href='{% url "client:login-detail" login_pk=login.pk %}'>
+                    <td><a href='{% url "locnus:personal-timeline" login_pk=login.pk %}'>
                       <button type="button" class="btn btn-light">Toots</button>
                     </a></td>
                   </tr>
