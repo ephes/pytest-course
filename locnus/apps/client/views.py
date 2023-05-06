@@ -18,7 +18,7 @@ def post_create_client(request):
         form.save()
         return redirect("client:client-list")
     else:
-        return render(request, "create.html", context={"form": form})
+        return render(request, "create_client.html", context={"form": form})
 
 
 @require_GET
