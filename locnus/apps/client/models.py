@@ -11,7 +11,7 @@ class Client(models.Model):
         return self.api_base_url
 
 
-class ClientUser(models.Model):
+class Login(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     username = models.CharField(max_length=100)
     access_token = models.CharField(max_length=100)

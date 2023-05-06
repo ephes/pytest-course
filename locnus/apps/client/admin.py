@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 
-from .models import Client, ClientUser
+from .models import Client, Login
 
 
 @admin.register(Client)
@@ -10,7 +10,7 @@ class ClientModelAdmin(ModelAdmin):
     fields = ("api_base_url", "remote_id", "name", "secret")
 
 
-@admin.register(ClientUser)
+@admin.register(Login)
 class ClientUserModelAdmin(ModelAdmin):
     list_display = ("client", "username")
     fields = ("client", "username", "access_token")
