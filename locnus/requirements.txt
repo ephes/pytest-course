@@ -1,3 +1,4 @@
+crispy-tailwind
 django_extensions
 jupyterlab
 jupyter-server<2.0.0

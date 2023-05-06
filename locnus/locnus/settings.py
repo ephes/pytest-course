@@ -10,11 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# make sure our apps directory is on the python path
+sys.path.append(str(BASE_DIR / "apps"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -38,7 +41,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
-    "core.apps.CoreConfig",
+    "crispy_forms",
+    "crispy_tailwind",
+    "apps.core.apps.CoreConfig",
 ]
 
 MIDDLEWARE = [
@@ -145,3 +150,7 @@ NOTEBOOK_ARGUMENTS = [
     notebook_default_url,
 ]
 IPYTHON_KERNEL_DISPLAY_NAME = "Django Kernel"
+
+# Crispy Forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+CRISPY_TEMPLATE_PACK = "tailwind"
