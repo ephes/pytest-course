@@ -15,3 +15,23 @@ Install the dependencies with pip:
 python -m pip install -r requirements.txt
 ```
 
+### pre-commit
+
+Install the pre-commit hooks:
+
+```bash
+python -m pip install pre-commit
+pre-commit install
+```
+
+### Django Example Project
+
+To create the Django example project, run:
+
+```bash
+django-admin startproject locnus
+cd locnus
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+```
