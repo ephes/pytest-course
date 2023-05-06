@@ -31,7 +31,9 @@ def get_create_client(request):
 def get_login_list(request, client_pk):
     client = Client.objects.get(pk=client_pk)
     logins = client.login_set.all()
-    return render(request, "login_list.html", context={"client": client, "logins": logins})
+    return render(
+        request, "login_list.html", context={"client": client, "logins": logins}
+    )
 
 
 @require_GET
@@ -56,7 +58,9 @@ def get_login_detail(request, login_pk):
         {"id": 1, "content": "Hello, world!"},
     ]
     login = Login.objects.get(pk=login_pk)
-    return render(request, "login_detail.html", context={"login": login, "toots": toots})
+    return render(
+        request, "login_detail.html", context={"login": login, "toots": toots}
+    )
 
 
 @require_GET
