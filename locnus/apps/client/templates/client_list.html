@@ -39,7 +39,7 @@
                 {% for client in clients %}
                   <tr>
                     <th scope="row">{{ forloop.counter }}</th>
-                    <td>{{ client.api_base_url }}</td>
+                    <td><a href='{% url "client:client-update" %}'>{{ client.api_base_url }}</a></td>
                     <td>{{ client.name }}</td>
                     <td><a href='{% url "client:timeline" client_pk=client.pk %}'>
                       <button type="button" class="btn btn-light">Timeline</button>
