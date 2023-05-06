@@ -8,10 +8,7 @@ from .models import Client, Login
 class ClientForm(ModelForm):
     class Meta:
         model = Client
-        fields = ["api_base_url", "name", "remote_id", "secret"]
-        widgets = {
-            "secret": PasswordInput(),  # Set the widget for the secret field to be a password input
-        }
+        fields = ["api_base_url", "name"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

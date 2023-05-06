@@ -4,7 +4,7 @@ from mastodon import Mastodon
 
 class Client(models.Model):
     api_base_url = models.URLField(verbose_name="API Base URL", unique=True)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, default="pytooterapp")
     remote_id = models.CharField(max_length=100)
     secret = models.CharField(max_length=100)
 
