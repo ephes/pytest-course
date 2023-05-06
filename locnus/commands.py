@@ -10,6 +10,10 @@ def get_project_root():
     return Path(__file__).parent.resolve()
 
 
+def sync_via_piptools():
+    subprocess.call([sys.executable, "-m", "piptools", "sync", "requirements/develop.txt"])
+
+
 def update_via_pip_tools(upgrade: bool):
     base_command = [sys.executable, "-m", "piptools", "compile"]
     if upgrade:
@@ -37,7 +41,7 @@ def update_via_pip_tools(upgrade: bool):
             "requirements/production.txt",
         ]
     )
-    subprocess.call([sys.executable, "-m", "piptools", "sync", "requirements/develop.txt"])
+    sync_via_piptools()
 
 
 def bootstrap():
@@ -136,6 +140,14 @@ def update(upgrade: bool = typer.Option(True, "--upgrade/--no-upgrade")):
     - pip-sync develop.txt
     """
     update_via_pip_tools(upgrade)
+
+
+@cli.command()
+def sync():
+    """
+    Shortcut for piptools sync.
+    """
+    sync_via_piptools()
 
 
 @cli.command()

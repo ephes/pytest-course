@@ -36,7 +36,7 @@ cd apps
 ../manage.py startapp --template https://github.com/ephes/django-template/releases/download/v0.1.6/app_template.zip client
 touch __init__.py
 cd ..
-python commands.py update
+python commands.py sync
 python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser
