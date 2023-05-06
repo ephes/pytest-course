@@ -1,5 +1,6 @@
-crispy-tailwind
+crispy-bootstrap5
 django_extensions
+django-tailwind
 jupyterlab
 jupyter-server<2.0.0
 Mastodon.py
