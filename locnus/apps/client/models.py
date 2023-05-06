@@ -1,4 +1,5 @@
 from django.db import models
+from mastodon import Mastodon
 
 
 class Client(models.Model):
@@ -9,6 +10,10 @@ class Client(models.Model):
 
     def __str__(self):
         return self.api_base_url
+
+    def public_timeline(self):
+        mastodon = Mastodon(api_base_url=self.api_base_url)
+        return mastodon.timeline_public()
 
 
 class Login(models.Model):

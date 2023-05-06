@@ -31,7 +31,8 @@
                   <th scope="col">#</th>
                   <th scope="col">Base API Url</th>
                   <th scope="col">Name</th>
-                  <th scope="col">Details</th>
+                  <th scope="col">Public</th>
+                  <th scope="col">Personal</th>
                 </tr>
               </thead>
               <tbody>
@@ -40,6 +41,9 @@
                     <th scope="row">{{ forloop.counter }}</th>
                     <td>{{ client.api_base_url }}</td>
                     <td>{{ client.name }}</td>
+                    <td><a href='{% url "client:timeline" client_pk=client.pk %}'>
+                      <button type="button" class="btn btn-light">Timeline</button>
+                    </a></td>
                     <td><a href='{% url "client:login-list" client_pk=client.pk %}'>
                       <button type="button" class="btn btn-light">Logins</button>
                     </a></td>

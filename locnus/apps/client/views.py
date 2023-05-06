@@ -57,3 +57,10 @@ def get_login_detail(request, login_pk):
     ]
     login = Login.objects.get(pk=login_pk)
     return render(request, "login_detail.html", context={"login": login, "toots": toots})
+
+
+@require_GET
+def get_timeline(request, client_pk):
+    client = Client.objects.get(pk=client_pk)
+    toots = client.public_timeline()
+    return render(request, "timeline.html", context={"client": client, "toots": toots})

@@ -14,4 +14,6 @@ urlpatterns = [
     path("login-create/", views.get_create_login, name="get-create-login"),
     path("login-post-create/", views.post_create_login, name="post-create-login"),
     path("login-detail/<int:login_pk>", views.get_login_detail, name="login-detail"),
+    # timeline
+    path("timeline/<int:client_pk>", views.get_timeline, name="timeline"),
 ]
