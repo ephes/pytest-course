@@ -1,0 +1,8 @@
+django_extensions
+jupyterlab
+jupyter-server<2.0.0
+Mastodon.py
+pytest-cov
+pytest-django
+pytest-mock
+pytest-randomly
