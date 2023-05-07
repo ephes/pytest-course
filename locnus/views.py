@@ -7,7 +7,11 @@ from .models import Account, Server
 
 @require_GET
 def index(request):
-    return render(request, "index.html")
+    toots = []
+    account = Account.objects.first()
+    if account is not None:
+        toots = account.personal_timeline()
+    return render(request, "index.html", context={"toots": toots})
 
 
 @require_GET
