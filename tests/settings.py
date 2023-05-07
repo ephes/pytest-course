@@ -1,7 +1,8 @@
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).parent
-APPS_DIR = ROOT_DIR / "locnus"
+FILES_DIR = ROOT_DIR / "files"
+APPS_DIR = FILES_DIR / "locnus"
 
 DEBUG = False
 USE_TZ = True
