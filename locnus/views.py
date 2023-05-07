@@ -30,7 +30,7 @@ def get_create_server(request):
 @require_GET
 def get_login_list(request, server_pk):
     server = Server.objects.get(pk=server_pk)
-    logins = server.login_set.all()
+    logins = server.logins.all()
     return render(request, "login_list.html", context={"server": server, "logins": logins})
 
 
