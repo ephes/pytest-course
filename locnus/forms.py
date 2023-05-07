@@ -9,21 +9,12 @@ from .models import Login, Server
 class ServerForm(ModelForm):
     class Meta:
         model = Server
-        fields = ["api_base_url", "client_name"]
+        fields = ["api_base_url"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.add_input(Submit("submit", "Submit"))
-
-    def save(self, commit=True):
-        instance = super().save(commit=False)
-        instance.create_client()
-
-        if commit:
-            instance.save()
-
-        return instance
 
 
 class LoginForm(ModelForm):

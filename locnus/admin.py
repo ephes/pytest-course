@@ -1,13 +1,19 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 
-from .models import Login, Server
+from .models import Client, Login, Server
+
+
+@admin.register(Client)
+class ClientModelAdmin(ModelAdmin):
+    list_display = ("server", "name")
+    fields = ("name", "remote_id", "secret")
 
 
 @admin.register(Server)
 class ServerModelAdmin(ModelAdmin):
     list_display = ("api_base_url",)
-    fields = ("api_base_url", "client_name", "client_id", "client_secret")
+    fields = ("api_base_url", "client")
 
 
 @admin.register(Login)
