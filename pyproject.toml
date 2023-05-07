@@ -72,6 +72,12 @@ name = "locnus"
 
 [tool.isort]
 profile = "black"
+src_paths = ["locnus", "tests"]
+skip = [
+    "locnus/migrations",
+    "locnus/settings.py",
+    "example/config/settings/*",
+]
 
 [tool.black]
 line-length = 119
