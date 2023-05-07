@@ -44,8 +44,8 @@
                     <td><a href='{% url "locnus:public-timeline" server_pk=server.pk %}'>
                       <button type="button" class="btn btn-light">Timeline</button>
                     </a></td>
-                    <td><a href='{% url "locnus:login-list" server_pk=server.pk %}'>
-                      <button type="button" class="btn btn-light">Logins</button>
+                    <td><a href='{% url "locnus:account-list" server_pk=server.pk %}'>
+                      <button type="button" class="btn btn-light">Accounts</button>
                     </a></td>
                   </tr>
                 {% endfor %}

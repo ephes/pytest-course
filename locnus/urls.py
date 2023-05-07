@@ -9,11 +9,11 @@ urlpatterns = [
     path("server-list/", views.server_list, name="server-list"),
     path("server-create/", views.get_create_server, name="get-create-server"),
     path("client-post-create/", views.post_create_server, name="post-create-server"),
-    # login
-    path("login-list/<int:server_pk>", views.get_login_list, name="login-list"),
-    path("login-create/", views.get_create_login, name="get-create-login"),
-    path("login-post-create/", views.post_create_login, name="post-create-login"),
-    path("personal-timeline/<int:login_pk>", views.get_personal_timeline, name="personal-timeline"),
+    # account
+    path("account-list/<int:server_pk>", views.get_account_list, name="account-list"),
+    path("account-create/", views.get_create_account, name="get-create-account"),
+    path("account-post-create/", views.post_create_account, name="post-create-account"),
+    path("personal-timeline/<int:account_pk>", views.get_personal_timeline, name="personal-timeline"),
     # timeline
     path("public-timeline/<int:server_pk>", views.get_public_timeline, name="public-timeline"),
 ]

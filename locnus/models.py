@@ -45,8 +45,8 @@ class Server(models.Model):
         return mastodon.timeline_public()
 
 
-class Login(models.Model):
-    server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name="logins")
+class Account(models.Model):
+    server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name="accounts")
     username = models.CharField(max_length=100)
     access_token = models.CharField(max_length=100)
 

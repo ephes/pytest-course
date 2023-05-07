@@ -1,8 +1,8 @@
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET, require_POST
 
-from .forms import LoginForm, ServerForm
-from .models import Login, Server
+from .forms import AccountForm, ServerForm
+from .models import Account, Server
 
 
 @require_GET
@@ -28,33 +28,33 @@ def get_create_server(request):
 
 
 @require_GET
-def get_login_list(request, server_pk):
+def get_account_list(request, server_pk):
     server = Server.objects.get(pk=server_pk)
-    logins = server.logins.all()
-    return render(request, "login_list.html", context={"server": server, "logins": logins})
+    accounts = server.accounts.all()
+    return render(request, "account_list.html", context={"server": server, "accounts": accounts})
 
 
 @require_GET
-def get_create_login(request):
-    form = LoginForm()
-    return render(request, "create_login.html", context={"form": form})
+def get_create_account(request):
+    form = AccountForm()
+    return render(request, "create_account.html", context={"form": form})
 
 
 @require_POST
-def post_create_login(request):
-    form = LoginForm(request.POST)
+def post_create_account(request):
+    form = AccountForm(request.POST)
     if form.is_valid():
         form.save()
-        return redirect("locnus:login-list", server_pk=form.instance.server.pk)
+        return redirect("locnus:account-list", server_pk=form.instance.server.pk)
     else:
-        return render(request, "create_login.html", context={"form": form})
+        return render(request, "create_account.html", context={"form": form})
 
 
 @require_GET
-def get_personal_timeline(request, login_pk):
-    login = Login.objects.get(pk=login_pk)
-    toots = login.personal_timeline()
-    return render(request, "timeline.html", context={"login": login, "toots": toots})
+def get_personal_timeline(request, account_pk):
+    account = Account.objects.get(pk=account_pk)
+    toots = account.personal_timeline()
+    return render(request, "timeline.html", context={"account": account, "toots": toots})
 
 
 @require_GET

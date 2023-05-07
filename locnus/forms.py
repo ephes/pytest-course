@@ -3,7 +3,7 @@ from crispy_forms.layout import Submit
 from django.forms import CharField, ModelForm, PasswordInput
 from mastodon import MastodonIllegalArgumentError
 
-from .models import Login, Server
+from .models import Account, Server
 
 
 class ServerForm(ModelForm):
@@ -17,11 +17,11 @@ class ServerForm(ModelForm):
         self.helper.add_input(Submit("submit", "Submit"))
 
 
-class LoginForm(ModelForm):
+class AccountForm(ModelForm):
     password = CharField(widget=PasswordInput())
 
     class Meta:
-        model = Login
+        model = Account
         fields = ["server", "username"]
 
     def __init__(self, *args, **kwargs):
