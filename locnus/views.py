@@ -6,6 +6,11 @@ from .models import Account, Server
 
 
 @require_GET
+def index(request):
+    return render(request, "index.html")
+
+
+@require_GET
 def server_list(request):
     servers = Server.objects.all()
     return render(request, "server_list.html", context={"servers": servers})
