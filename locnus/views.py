@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_GET, require_POST
 
 from .forms import AccountForm, ServerForm
@@ -68,6 +68,6 @@ def get_personal_timeline(request, account_pk):
 
 @require_GET
 def get_public_timeline(request, server_pk):
-    server = Server.objects.get(pk=server_pk)
+    server = get_object_or_404(Server, pk=server_pk)
     toots = server.public_timeline()
     return render(request, "timeline.html", context={"server": server, "toots": toots})
