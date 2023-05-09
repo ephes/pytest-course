@@ -29,10 +29,18 @@ def test_get_public_timeline_missing_server(client):
     assert response.status_code == 404
 
 
+@pytest.fixture(params=["locnus:server-list", "locnus:get-create-server", "locnus:get-create-account"])
+def view_name(request):
+    return request.param
+
+
+@pytest.fixture(params=[200, 201])
+def response_status_code(request):
+    return request.param
+
+
 @pytest.mark.django_db
-def test_get_views(client):
-    url = reverse("locnus:server-list")
-    url = reverse("locnus:get-create-server")
-    url = reverse("locnus:get-create-account")
+def test_get_views(client, view_name, response_status_code):
+    url = reverse(view_name)
     r = client.get(url)
-    assert r.status_code == 200
+    assert r.status_code == response_status_code
