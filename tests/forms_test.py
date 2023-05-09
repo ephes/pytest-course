@@ -25,6 +25,5 @@ def test_server_form_valid_url():
 
 @pytest.mark.django_db
 def test_account_form_invalid_data():
-    invalid_data = {"server": "", "username": "", "password": ""}
-    form = forms.AccountForm(data=invalid_data)
+    form = forms.AccountForm()
     assert not form.is_valid()

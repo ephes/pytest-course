@@ -27,6 +27,4 @@ def test_some_file(some_file):
 
 
 def test_some_file_again(some_file_path):
-    print(some_file_path)
-    breakpoint()
     assert not some_file_path.exists()

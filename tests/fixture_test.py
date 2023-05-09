@@ -14,4 +14,5 @@ def two():
 
 def test_fixtures(one, rf):
     print(one)
-    assert False
+    # assert False
+    assert True

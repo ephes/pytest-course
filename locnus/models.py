@@ -45,6 +45,12 @@ class Server(models.Model):
         mastodon = Mastodon(api_base_url=self.api_base_url)
         return mastodon.timeline_public()
 
+    def timeline_public(self):
+        return Timeline.objects.public().filter(server=self)
+
+    def timeline_local(self):
+        return Timeline.objects.local().filter(server=self)
+
 
 class Account(models.Model):
     server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name="accounts")
@@ -62,10 +68,20 @@ class Account(models.Model):
         return mastodon.timeline_home()
 
 
+class TimelineManager(models.Manager):
+    def public(self):
+        return self.filter(tag=Timeline.Tag.PUBLIC)
+
+    def local(self):
+        return self.filter(tag=Timeline.Tag.LOCAL)
+
+
 class Timeline(models.Model):
     status = models.ForeignKey("Status", on_delete=models.CASCADE, related_name="timelines")
     account = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, blank=True)
     server = models.ForeignKey(Server, on_delete=models.CASCADE)
+
+    objects = TimelineManager()
 
     class Tag(models.IntegerChoices):
         PUBLIC = 1
@@ -75,6 +91,7 @@ class Timeline(models.Model):
 
 
 class Status(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
     data = models.JSONField(encoder=DjangoJSONEncoder)
     timeline = models.ManyToManyField(Server, through=Timeline)
