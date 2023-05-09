@@ -67,6 +67,9 @@ class Account(models.Model):
         )
         return mastodon.timeline_home()
 
+    def timeline_home(self):
+        return Timeline.objects.filter(tag=Timeline.Tag.HOME, account=self)
+
 
 class TimelineManager(models.Manager):
     def public(self):
@@ -86,6 +89,7 @@ class Timeline(models.Model):
     class Tag(models.IntegerChoices):
         PUBLIC = 1
         LOCAL = 2
+        HOME = 3
 
     tag = models.IntegerField(choices=Tag.choices)
 

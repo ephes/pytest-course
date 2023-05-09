@@ -94,6 +94,29 @@ def test_create_status(status):
     assert status in Status.objects.all()
 
 
+@pytest.fixture(params=[Timeline.Tag.PUBLIC, Timeline.Tag.LOCAL])
+def timeline_tag(request):
+    return request.param
+
+
+@pytest.fixture(params=[Server.timeline_public, Server.timeline_local])
+def get_timeline(request):
+    return request.param
+
+
+@pytest.mark.django_db
+def test_tagged_status_in_appropriate_timeline_via_fixture_params(timeline_tag, get_timeline, status, server):
+    item = Timeline(status=status, server=server, tag=timeline_tag)
+    item.save()
+    timeline_qs = get_timeline(server)
+    status_pks = {x.status.pk for x in timeline_qs}
+    should_be_in_timeline = timeline_tag.name.lower() in str(get_timeline)
+    if should_be_in_timeline:
+        assert status.pk in status_pks
+    else:
+        assert status.pk not in status_pks
+
+
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "tag, get_timeline, should_be_in_timeline",
@@ -113,6 +136,22 @@ def test_tagged_status_in_appropriate_timeline(tag, get_timeline, should_be_in_t
         assert status.pk in status_pks
     else:
         assert status.pk not in status_pks
+
+
+@pytest.fixture()
+def account(server):
+    account = Account(server=server, username="alice", access_token="access_token")
+    account.save()
+    return account
+
+
+@pytest.mark.django_db
+def test_add_status_for_home_timeline(status, account):
+    item = Timeline(status=status, account=account, server=account.server, tag=Timeline.Tag.HOME)
+    item.save()
+    home_qs = account.timeline_home()
+    status_pks = {x.status.pk for x in home_qs}
+    assert status.pk in status_pks
 
 
 @pytest.mark.parametrize(
