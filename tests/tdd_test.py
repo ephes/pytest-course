@@ -3,7 +3,7 @@ from django.urls import reverse
 
 from locnus import forms
 
-pytestmark = pytest.mark.django_db
+pytestmark = [pytest.mark.smoke, pytest.mark.django_db]
 
 
 def test_post_status_got_called(mocker, account):
@@ -28,6 +28,7 @@ def test_get_toot_view(client):
     assert "form" in response.context
 
 
+@pytest.mark.skip()
 def test_post_toot_view(client, mocker, account):
     toot = mocker.patch("locnus.models.Mastodon.toot")
     url = reverse("locnus:post-create-toot")

@@ -1,6 +1,5 @@
 import pytest
 from django.db import IntegrityError
-from django.utils import timezone
 
 from locnus.models import Account, Client, Server, Status, Timeline
 
@@ -72,23 +71,6 @@ def test_with_different_settings(settings):
     settings.ADMIN_ENABLED = False
 
 
-@pytest.fixture()
-def status_data():
-    """Some raw status data from the Mastodon API."""
-    return {
-        "created_at": timezone.now(),
-        "id": 123,
-        "content": "Hello, world!",
-    }
-
-
-@pytest.fixture()
-def status(status_data):
-    status = Status(id=1, created_at=status_data["created_at"], data=status_data)
-    status.save()
-    return status
-
-
 @pytest.mark.django_db
 def test_create_status(status):
     assert status in Status.objects.all()
@@ -158,3 +140,9 @@ def test_add_status_for_home_timeline(status, account):
 )
 def test_combinations(first, last):
     assert first != last
+
+
+@pytest.mark.django_db
+@pytest.mark.num_toots(3)
+def test_save_a_number_of_toots(status):
+    assert Status.objects.count() == 3

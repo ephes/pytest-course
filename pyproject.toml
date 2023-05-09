@@ -92,14 +92,16 @@ filterwarnings = [
 ]
 addopts = [
     "-ra",
+    "--reuse-db",
+    "--no-migrations",
     # "-m not slow",
-    # "--reuse-db",
-    # "--no-migrations",
     # "--randomly-seed=1234",
 ]
 
 markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "smoke: just a smoke test",
+    "num_toots: number of toots to generate",
 ]
 
 [tool.coverage.run]
