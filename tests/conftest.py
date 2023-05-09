@@ -6,4 +6,5 @@ from locnus import models
 @pytest.fixture()
 def server():
     server = models.Server(api_base_url="https://example.com")
+    server.save()
     return server

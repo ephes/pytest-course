@@ -1,5 +1,6 @@
 import pytest
 from django.urls import reverse
+
 from locnus import views
 
 
@@ -26,3 +27,12 @@ def test_get_public_timeline_missing_server(client):
     url = reverse("locnus:public-timeline", args=[non_existent_server_pk])
     response = client.get(url)
     assert response.status_code == 404
+
+
+@pytest.mark.django_db
+def test_get_views(client):
+    url = reverse("locnus:server-list")
+    url = reverse("locnus:get-create-server")
+    url = reverse("locnus:get-create-account")
+    r = client.get(url)
+    assert r.status_code == 200

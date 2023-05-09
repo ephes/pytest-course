@@ -64,8 +64,8 @@ class Account(models.Model):
 
 class Timeline(models.Model):
     status = models.ForeignKey("Status", on_delete=models.CASCADE, related_name="timelines")
-    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="timelines", null=True, blank=True)
-    server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name="timelines")
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, blank=True)
+    server = models.ForeignKey(Server, on_delete=models.CASCADE)
 
     class Tag(models.IntegerChoices):
         PUBLIC = 1
@@ -77,4 +77,4 @@ class Timeline(models.Model):
 class Status(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     data = models.JSONField(encoder=DjangoJSONEncoder)
-    timeline = models.ManyToManyField(Server, related_name="status", through=Timeline)
+    timeline = models.ManyToManyField(Server, through=Timeline)
