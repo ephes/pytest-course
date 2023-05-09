@@ -138,13 +138,6 @@ def test_tagged_status_in_appropriate_timeline(tag, get_timeline, should_be_in_t
         assert status.pk not in status_pks
 
 
-@pytest.fixture()
-def account(server):
-    account = Account(server=server, username="alice", access_token="access_token")
-    account.save()
-    return account
-
-
 @pytest.mark.django_db
 def test_add_status_for_home_timeline(status, account):
     item = Timeline(status=status, account=account, server=account.server, tag=Timeline.Tag.HOME)

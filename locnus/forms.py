@@ -1,6 +1,6 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-from django.forms import CharField, ModelForm, PasswordInput
+from django.forms import CharField, Form, ModelForm, PasswordInput
 from mastodon import MastodonIllegalArgumentError
 
 from .models import Account, Server
@@ -37,3 +37,15 @@ class AccountForm(ModelForm):
             )
         except MastodonIllegalArgumentError:
             self.add_error("password", "Invalid username or password")
+
+
+class TootForm(Form):
+    content = CharField()
+
+    class Meta:
+        fields = ["content"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(Submit("submit", "Submit"))

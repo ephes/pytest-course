@@ -18,4 +18,7 @@ urlpatterns = [
     path("personal-timeline/<int:account_pk>", views.get_personal_timeline, name="personal-timeline"),
     # timeline
     path("public-timeline/<int:server_pk>", views.get_public_timeline, name="public-timeline"),
+    # toot
+    path("toot-get-create/", views.get_create_toot, name="get-create-toot"),
+    path("toot-post-create/", views.post_create_toot, name="post-create-toot"),
 ]

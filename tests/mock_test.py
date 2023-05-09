@@ -1,7 +1,5 @@
 from unittest.mock import patch
 
-import pytest
-
 from locnus import models
 
 
@@ -37,8 +35,3 @@ def test_from_api_base_url_context_manager():
     assert client.name == "mocked_client"
     assert client.remote_id == "remote_id"
     assert client.secret == "secret"
-
-
-@pytest.mark.xfail(reason="not implemented yet")
-def test_mock_expected_fail():
-    assert False

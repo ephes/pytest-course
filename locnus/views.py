@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_GET, require_POST
 
-from .forms import AccountForm, ServerForm
+from .forms import AccountForm, ServerForm, TootForm
 from .models import Account, Server
 
 
@@ -71,3 +71,22 @@ def get_public_timeline(request, server_pk):
     server = get_object_or_404(Server, pk=server_pk)
     toots = server.public_timeline()
     return render(request, "timeline.html", context={"server": server, "toots": toots})
+
+
+@require_GET
+def get_create_toot(request):
+    form = TootForm()
+    return render(request, "create_toot.html", context={"form": form})
+
+
+@require_POST
+def post_create_toot(request):
+    print("----------------------------------")
+    print(request.POST)
+    account = Account.objects.first()
+    form = TootForm(request.POST)
+    if form.is_valid():
+        account.toot(form.cleaned_data["content"])
+        return redirect("locnus:home")
+    else:
+        return render(request, "create_toot.html", context={"form": form})

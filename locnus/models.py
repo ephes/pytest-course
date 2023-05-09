@@ -70,6 +70,15 @@ class Account(models.Model):
     def timeline_home(self):
         return Timeline.objects.filter(tag=Timeline.Tag.HOME, account=self)
 
+    def toot(self, content):
+        mastodon = Mastodon(
+            access_token=self.access_token,
+            api_base_url=self.server.api_base_url,
+        )
+        response = mastodon.toot(content)
+        print("response: ", response)
+        return response
+
 
 class TimelineManager(models.Manager):
     def public(self):
