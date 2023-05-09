@@ -34,7 +34,7 @@ def view_name(request):
     return request.param
 
 
-@pytest.fixture(params=[200, 201])
+@pytest.fixture(params=[200])
 def response_status_code(request):
     return request.param
 

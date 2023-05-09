@@ -27,3 +27,13 @@ def test_server_form_valid_url():
 def test_account_form_invalid_data():
     form = forms.AccountForm()
     assert not form.is_valid()
+
+
+@pytest.fixture(params=(forms.AccountForm, forms.ServerForm))
+def empty_invalid_form(request):
+    return request.param()
+
+
+@pytest.mark.django_db
+def test_empty_form_invalid(empty_invalid_form):
+    assert not empty_invalid_form.is_valid()
