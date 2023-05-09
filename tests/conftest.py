@@ -12,6 +12,13 @@ def server():
 
 
 @pytest.fixture()
+def mastodon_client():
+    client = models.Client(name="pytooterapp", remote_id="remote_id", secret="secret")
+    client.save()
+    return client
+
+
+@pytest.fixture()
 def account(server):
     account = models.Account(server=server, username="alice", access_token="access_token")
     account.save()

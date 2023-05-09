@@ -1,6 +1,6 @@
 import pytest
 
-from .first import add_numbers
+from .misc import add_numbers
 
 
 class TestFirst:

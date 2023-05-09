@@ -1,21 +1,12 @@
 import pytest
 from django.db import IntegrityError
 
-from locnus.models import Account, Client, Server, Status, Timeline
-
-from .first import hello_world
-
-
-@pytest.fixture(name="client")
-def mastodon_client():
-    client = Client(name="pytooterapp", remote_id="remote_id", secret="secret")
-    client.save()
-    return client
+from locnus.models import Account, Server, Status, Timeline
 
 
 @pytest.mark.django_db
-def test_server_in_database(client):
-    server = Server(api_base_url="https://example.com", client=client)
+def test_server_in_database(mastodon_client):
+    server = Server(api_base_url="https://example.com", client=mastodon_client)
 
     server.save()
     assert server in Server.objects.all()
@@ -28,47 +19,24 @@ def test_no_account_without_server():
         account.save()
 
 
-# @pytest.fixture()
-def server(client):
-    server = Server(api_base_url="https://example.com", client=client)
-    server.save()
-    return server
-
-
 @pytest.mark.django_db
-def test_account_in_database(client):
-    item = server(client)
-    account = Account(server=item, username="alice", access_token="access_token")
+def test_account_in_database(server, mastodon_client):
+    account = Account(server=server, username="alice", access_token="access_token")
     account.save()
-    assert item.accounts.count() == 1
-    assert len(item.accounts.all()) == 1
-    # assert account in Account.objects.all()
-    # assert Account.objects.count() == 1
+    assert server.accounts.count() == 1
+    assert len(server.accounts.all()) == 1
 
 
 @pytest.mark.django_db
-def test_modifies_database(client):
-    server = Server(api_base_url="https://example.com", client=client)
+def test_modifies_database(mastodon_client):
+    server = Server(api_base_url="https://example.com", client=mastodon_client)
     server.save()
     assert server in Server.objects.all()
 
 
-@pytest.mark.django_db
-def test_uses_modified_database(django_db_setup):
-    print(Server.objects.all())
-    # assert False
-    assert True
-
-
-def test_hello_world(capsys):
-    hello_world()
-    output = capsys.readouterr().out
-    print("output: ", output)
-    assert output == "hello world!\n"
-
-
 def test_with_different_settings(settings):
     settings.ADMIN_ENABLED = False
+    assert True
 
 
 @pytest.mark.django_db

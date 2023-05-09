@@ -1,4 +1,4 @@
-from .first import add_numbers, concat_strings
+from .misc import add_numbers, concat_strings, hello_world
 
 
 def test_passing():
@@ -31,3 +31,10 @@ def test_item_in_list():
 def test_item_is_not_none():
     item = "foobar"
     assert item is not None
+
+
+def test_hello_world(capsys):
+    hello_world()
+    output = capsys.readouterr().out
+    print("output: ", output)
+    assert output == "hello world!\n"
