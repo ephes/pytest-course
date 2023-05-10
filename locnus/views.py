@@ -81,8 +81,6 @@ def get_create_toot(request):
 
 @require_POST
 def post_create_toot(request):
-    print("----------------------------------")
-    print(request.POST)
     account = Account.objects.first()
     form = TootForm(request.POST)
     if form.is_valid():
