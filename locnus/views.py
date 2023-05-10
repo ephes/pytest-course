@@ -6,12 +6,12 @@ from .models import Account, Server
 
 
 @require_GET
-def index(request):
+def home(request):
     toots = []
     account = Account.objects.first()
     if account is not None:
-        toots = account.personal_timeline()
-    return render(request, "index.html", context={"toots": toots})
+        toots = account.timeline_home()
+    return render(request, "home.html", context={"toots": toots})
 
 
 @require_GET

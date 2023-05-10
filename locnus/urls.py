@@ -6,7 +6,7 @@ app_name = "client"
 
 urlpatterns = [
     # home
-    path("", views.index, name="home"),
+    path("", views.home, name="home"),
     # client
     path("server-list/", views.server_list, name="server-list"),
     path("server-create/", views.get_create_server, name="get-create-server"),

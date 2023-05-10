@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 import pytest
 from django.utils import timezone
 
@@ -47,3 +49,37 @@ def status(server, request, status_data):
         status = models.Status(id=0, created_at=status_data["created_at"], data=status_data)
         status.save()
     return status
+
+
+@pytest.fixture()
+def status_data_list():
+    return [
+        {
+            "created_at": timezone.now(),
+            "id": 123,
+            "data": {"id": 123, "created_at": timezone.now(), "content": "Hello, world!"},
+        },
+        {
+            "created_at": timezone.now() - timedelta(days=1),
+            "id": 456,
+            "data": {"id": 456, "created_at": timezone.now() - timedelta(days=1), "content": "Hello, past world!"},
+        },
+    ]
+
+
+@pytest.fixture()
+def bunch_status(status_data_list):
+    bunch = []
+    for status_data in status_data_list:
+        status = models.Status(id=status_data["id"], created_at=status_data["created_at"], data=status_data)
+        status.save()
+        bunch.append(status)
+    return bunch
+
+
+@pytest.fixture()
+def home_toots(account, bunch_status):
+    for status in bunch_status:
+        item = models.Timeline(account=account, status=status, tag=models.Timeline.Tag.HOME, server=account.server)
+        item.save()
+    return bunch_status

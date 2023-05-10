@@ -68,7 +68,9 @@ class Account(models.Model):
         return mastodon.timeline_home()
 
     def timeline_home(self):
-        return Timeline.objects.filter(tag=Timeline.Tag.HOME, account=self)
+        timeline_qs = Timeline.objects.filter(tag=Timeline.Tag.HOME, account=self)
+        toots = [timeline.status for timeline in timeline_qs]
+        return toots
 
     def toot(self, content):
         mastodon = Mastodon(
@@ -76,8 +78,16 @@ class Account(models.Model):
             api_base_url=self.server.api_base_url,
         )
         response = mastodon.toot(content)
-        print("response: ", response)
         return response
+
+    def remove_home_toots(self):
+        for toot in self.timeline_home():
+            toot.delete()
+
+
+def delete_account(account):
+    account.remove_home_toots()
+    account.delete()
 
 
 class TimelineManager(models.Manager):
@@ -108,3 +118,11 @@ class Status(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     data = models.JSONField(encoder=DjangoJSONEncoder)
     timeline = models.ManyToManyField(Server, through=Timeline)
+
+    @property
+    def content(self):
+        return self.data.get("content")
+
+    @property
+    def display_name(self):
+        return self.data.get("account", {}).get("display_name")

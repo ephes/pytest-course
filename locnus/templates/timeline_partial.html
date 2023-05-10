@@ -15,7 +15,7 @@
               {% for toot in toots %}
                 <tr>
                   <th scope="row">{{ forloop.counter }}</th>
-                  <td>{{ toot.account.display_name }}</td>
+                  <td>{{ toot.display_name }}</td>
                   <td>{{ toot.content | safe}}</td>
                 </tr>
               {% endfor %}

@@ -52,10 +52,8 @@ def test_get_views(client, view_name, response_status_code):
 
 
 @pytest.mark.django_db
-def test_get_home_toots_from_db(client):
+def test_get_home_toots_from_db(client, home_toots):
     url = reverse("locnus:home")
     response = client.get(url)
     assert response.status_code == 200
     assert "toots" in response.context
-    print(response.context["toots"])
-    assert False
