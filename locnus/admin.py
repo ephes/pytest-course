@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 
-from .models import Client, Account, Server
+from .models import Account, Client, Server, Status
 
 
 @admin.register(Client)
@@ -20,3 +20,10 @@ class ServerModelAdmin(ModelAdmin):
 class AccountModelAdmin(ModelAdmin):
     list_display = ("server", "username")
     fields = ("server", "username", "access_token")
+
+
+@admin.register(Status)
+class StatusModelAdmin(ModelAdmin):
+    list_display = ("id", "created_at")
+    readonly_fields = ("created_at",)
+    fields = ("id", "created_at", "data")
