@@ -93,7 +93,7 @@ def test_add_status_for_home_timeline(status, account):
     item = Timeline(status=status, account=account, server=account.server, tag=Timeline.Tag.HOME)
     item.save()
     home_qs = account.timeline_home()
-    status_pks = {x.status.pk for x in home_qs}
+    status_pks = {x.pk for x in home_qs}
     assert status.pk in status_pks
 
 
