@@ -68,7 +68,7 @@ class Account(models.Model):
         return mastodon.timeline_home()
 
     def timeline_home(self):
-        timeline_qs = Timeline.objects.filter(tag=Timeline.Tag.HOME, account=self)
+        timeline_qs = Timeline.objects.filter(tag=Timeline.Tag.HOME, account=self).order_by("-status__created_at")
         toots = [timeline.status for timeline in timeline_qs]
         return toots
 

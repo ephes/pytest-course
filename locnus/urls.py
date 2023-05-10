@@ -22,4 +22,6 @@ urlpatterns = [
     # toot
     path("toot-get-create/", views.get_create_toot, name="get-create-toot"),
     path("toot-post-create/", views.post_create_toot, name="post-create-toot"),
+    # htmx test
+    path("htmx-test/", views.htmx_test, name="htmx-test"),
 ]

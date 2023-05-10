@@ -60,10 +60,11 @@ def get_create_server(request):
 
 @require_http_methods(["DELETE"])
 def delete_server(request, server_pk):
+    print("delete_server: ", server_pk)
     server = get_object_or_404(Server, pk=server_pk)
     server.delete()
     if request.htmx:
-        return HttpResponse(status=204)
+        return HttpResponse(status=200, content="")
     else:
         return redirect("locnus:server-list")
 
@@ -120,3 +121,15 @@ def post_create_toot(request):
         return redirect("locnus:home")
     else:
         return render(request, "create_toot.html", context={"form": form})
+
+
+def htmx_test(request):
+    button = """
+        <button hx-post="/htmx-test/"
+            hx-trigger="click" hx-target="this"
+            hx-swap="outerHTML" class="btn btn-secondary"
+          >
+          Click Me!
+          </button>
+    """
+    return HttpResponse(content=button.encode("utf8"), content_type="text/html")

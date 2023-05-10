@@ -19,6 +19,7 @@ def test_server_form_invalid_url():
     assert not form.is_valid()
 
 
+@pytest.mark.slow
 @pytest.mark.django_db
 def test_server_form_valid_url():
     form = forms.ServerForm({"api_base_url": "https://example.com"})
