@@ -8,7 +8,7 @@ authors = [
     {name = "Jochen Wersdörfer", email = "jochen@wersdoerfer.de"},
 ]
 dynamic = ["version", "description"]
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 keywords = [
     "Django",
     "Mastodon",
