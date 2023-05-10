@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from .base import *  # noqa
 from .base import env
 
+environ.Env.read_env(BASE_DIR / ".env")  # noqa
+
 DEBUG = False
 
 # SECURITY WARNING: keep the secret key used in production secret!

@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import require_GET, require_http_methods, require_POST
 
 from .forms import AccountForm, ServerForm, TootForm
 from .models import Account, Server
@@ -56,6 +56,16 @@ def post_create_server(request):
 def get_create_server(request):
     form = ServerForm()
     return render(request, "create_server.html", context={"form": form})
+
+
+@require_http_methods(["DELETE"])
+def delete_server(request, server_pk):
+    server = get_object_or_404(Server, pk=server_pk)
+    server.delete()
+    if request.htmx:
+        return HttpResponse(status=204)
+    else:
+        return redirect("locnus:server-list")
 
 
 @require_GET

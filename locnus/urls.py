@@ -7,10 +7,11 @@ app_name = "client"
 urlpatterns = [
     # home
     path("", views.home, name="home"),
-    # client
+    # server
     path("server-list/", views.server_list, name="server-list"),
     path("server-create/", views.get_create_server, name="get-create-server"),
     path("client-post-create/", views.post_create_server, name="post-create-server"),
+    path("delete-server/<int:server_pk>", views.delete_server, name="delete-server"),
     # account
     path("account-list/<int:server_pk>", views.get_account_list, name="account-list"),
     path("account-create/", views.get_create_account, name="get-create-account"),

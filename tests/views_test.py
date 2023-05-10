@@ -1,5 +1,6 @@
 import pytest
 from django.urls import reverse
+
 from locnus import views
 
 
@@ -73,3 +74,20 @@ def test_new_toot_in_home_timeline(client, account, home_toots, new_toot_data):
     response = client.get(url, **{"HTTP_HX_REQUEST": "true"})
     content = response.content.decode("utf-8")
     assert str(new_toot_data["id"]) in content
+
+
+@pytest.mark.django_db
+def test_delete_server_from_list(client, server):
+    # make sure server is in response context before deleting
+    url = reverse("locnus:server-list")
+    response = client.get(url)
+    assert server in response.context["servers"]
+
+    # delete server
+    url = reverse("locnus:delete-server", args=[server.pk])
+    client.delete(url)
+
+    # make sure server is not in response context after deleting
+    url = reverse("locnus:server-list")
+    response = client.get(url)
+    assert server not in response.context["servers"]
