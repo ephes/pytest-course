@@ -80,15 +80,6 @@ class Account(models.Model):
         response = mastodon.toot(content)
         return response
 
-    def remove_home_toots(self):
-        for toot in self.timeline_home():
-            toot.delete()
-
-
-def delete_account(account):
-    account.remove_home_toots()
-    account.delete()
-
 
 class TimelineManager(models.Manager):
     def public(self):
@@ -100,7 +91,7 @@ class TimelineManager(models.Manager):
 
 class Timeline(models.Model):
     status = models.ForeignKey("Status", on_delete=models.CASCADE, related_name="timelines")
-    account = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, blank=True)
+    account = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, blank=True)
     server = models.ForeignKey(Server, on_delete=models.CASCADE)
 
     objects = TimelineManager()

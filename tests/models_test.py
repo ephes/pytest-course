@@ -1,7 +1,7 @@
 import pytest
 from django.db import IntegrityError
 
-from locnus.models import Account, Server, Status, Timeline, delete_account
+from locnus.models import Account, Server, Status, Timeline
 
 
 @pytest.mark.django_db
@@ -118,6 +118,6 @@ def test_save_a_number_of_toots(db, status):
 
 @pytest.mark.django_db
 def test_delete_account(account, home_toots):
-    delete_account(account)
+    account.delete()
     for toot in home_toots:
-        assert toot not in Status.objects.all()
+        assert toot not in Timeline.objects.filter(account=account)
