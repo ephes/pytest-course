@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_GET, require_POST
 
@@ -9,9 +10,30 @@ from .models import Account, Server
 def home(request):
     toots = []
     account = Account.objects.first()
+    # print(request.session.get("seen_toots", {}))
     if account is not None:
         toots = account.timeline_home()
-    return render(request, "home.html", context={"toots": toots})
+        print("toots: ", toots)
+        try:
+            toots = [t for t in toots if str(t.id) not in request.session["seen_toots"]]
+        except KeyError:
+            request.session["seen_toots"] = {}
+    if request.htmx:
+        print("toots: ", toots)
+        table_rows = []
+        for toot in toots:
+            row = f"<tr><th>{toot.id}</th><td>{toot.display_name}</td><td>{toot.content}</td></tr>"
+            table_rows.append(row)
+            request.session["seen_toots"][toot.id] = True
+            request.session.save()
+        content = "\n".join(table_rows).encode("utf-8")
+        return HttpResponse(content=content, content_type="text/html")
+        # return HttpResponse(status=204)
+    else:
+        request.session["seen_toots"] = {}
+        for toot in toots:
+            request.session["seen_toots"][toot.id] = True
+        return render(request, "home.html", context={"toots": toots})
 
 
 @require_GET

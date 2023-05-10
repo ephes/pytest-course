@@ -80,6 +80,13 @@ class Account(models.Model):
         response = mastodon.toot(content)
         return response
 
+    def add_toot_to_home_timeline(self, toot):
+        status = Status(pk=toot["id"], created_at=toot["created_at"], data=toot)
+        status.save()
+        item = Timeline(account=self, status=status, tag=Timeline.Tag.HOME, server=self.server)
+        item.save()
+        return item
+
 
 class TimelineManager(models.Manager):
     def public(self):

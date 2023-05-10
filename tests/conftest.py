@@ -2,7 +2,6 @@ from datetime import timedelta
 
 import pytest
 from django.utils import timezone
-
 from locnus import models
 
 
@@ -83,3 +82,8 @@ def home_toots(account, bunch_status):
         item = models.Timeline(account=account, status=status, tag=models.Timeline.Tag.HOME, server=account.server)
         item.save()
     return bunch_status
+
+
+@pytest.fixture()
+def new_toot_data():
+    return {"id": 666, "created_at": timezone.now(), "content": "Hello, world!", "account": {"display_name": "Alice"}}

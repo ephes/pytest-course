@@ -1,6 +1,5 @@
 import pytest
 from django.urls import reverse
-
 from locnus import views
 
 
@@ -57,3 +56,20 @@ def test_get_home_toots_from_db(client, home_toots):
     response = client.get(url)
     assert response.status_code == 200
     assert "toots" in response.context
+
+
+@pytest.mark.django_db
+def test_new_toot_in_home_timeline(client, account, home_toots, new_toot_data):
+    url = reverse("locnus:home")
+    response = client.get(url)
+
+    # make sure the already saved home_toots are in the context
+    assert response.context["toots"][0].content == home_toots[0].content
+
+    # save a new toot
+    account.add_toot_to_home_timeline(new_toot_data)
+
+    # get the home page again via xmlhttprequest (ajax)
+    response = client.get(url, **{"HTTP_HX_REQUEST": "true"})
+    content = response.content.decode("utf-8")
+    assert str(new_toot_data["id"]) in content
