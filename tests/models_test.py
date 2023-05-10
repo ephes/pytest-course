@@ -73,7 +73,7 @@ def test_tagged_status_in_appropriate_timeline_via_fixture_params(timeline_tag, 
     [
         (Timeline.Tag.PUBLIC, Server.timeline_public, True),
         (Timeline.Tag.LOCAL, Server.timeline_public, False),
-        (Timeline.Tag.LOCAL, Server.timeline_local, True),
+        pytest.param(Timeline.Tag.LOCAL, Server.timeline_local, True, marks=pytest.mark.smoke),
         (Timeline.Tag.PUBLIC, Server.timeline_local, False),
     ],
 )
@@ -112,5 +112,5 @@ def test_combinations(first, last):
 
 @pytest.mark.django_db
 @pytest.mark.num_toots(3)
-def test_save_a_number_of_toots(status):
+def test_save_a_number_of_toots(db, status):
     assert Status.objects.count() == 3
