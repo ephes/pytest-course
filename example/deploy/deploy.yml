@@ -78,6 +78,11 @@
       become: true
       become_user: "{{ username }}"
 
+    - name: Install locnus
+      shell: "{{ python }} -m pip install locnus"
+      become: true
+      become_user: "{{ username }}"
+
     - name: Create gunicorn start script
       template:
         src: gunicorn.sh.j2

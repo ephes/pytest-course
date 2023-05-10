@@ -5,7 +5,6 @@ django-environ
 django-extensions
 gunicorn
 httpx
-locnus
 Mastodon.py
 psycopg[binary,pool]
 whitenoise
