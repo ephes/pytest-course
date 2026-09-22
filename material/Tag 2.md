@@ -1,0 +1,1 @@
+- Testen von Django Management Commands
